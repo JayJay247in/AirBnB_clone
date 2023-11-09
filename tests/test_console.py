@@ -1,10 +1,45 @@
-import console
+#!/usr/bin/python3
 import unittest
-from models.base_model import BaseModel
-from models import storage
-from models import User
+from unittest.mock import patch
+from io import StringIO
 
-def test_create_user(self):
-    console.do_create("User")
-    user_id = capture_output() # id printed
-    self.assertIn("User." + user_id, storage.all())
+from console import HBNBCommand
+from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+from models.user import User
+
+class TestConsole(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mock_stdout = StringIO()
+
+    def setUp(self):
+        self.console = HBNBCommand(stdout=self.mock_stdout)
+
+    def tearDown(self):
+        self.mock_stdout.truncate(0)
+        self.mock_stdout.seek(0)
+
+    def get_output(self, cmd):
+        self.console.onecmd(cmd)
+        return self.mock_stdout.getvalue()
+
+    def test_create_user(self):
+        user_id = self.get_output("create User")
+        self.assertIn("User." + user_id, FileStorage._FileStorage__objects)
+
+    def test_show_user(self):
+        user_id = self.get_output("create User")
+        user = self.get_output("show User " + user_id)
+        self.assertIn("User." + user_id, user)
+
+    def test_destroy_user(self):
+        user_id = self.get_output("create User")
+        self.get_output("destroy User " + user_id)
+        self.assertNotIn("User." + user_id, FileStorage._FileStorage__objects)
+        
+    def test_update_user(self):
+        user_id = self.get_output("create User")
+        self.get_output("update User " + user_id + " email \"test@test.com\"")
+        self.assertIn("test@test.com", str(FileStorage._FileStorage__objects["User." + user_id]))
