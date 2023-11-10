@@ -1,8 +1,10 @@
 #!/usr/bin/python3
-'''Console for the HBnB clone'''
+"""Console for the HBnB clone"""
+
 import cmd
 import sys
 import shlex
+
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -24,10 +26,14 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def preloop(self):
-        print()
+        """Prints if isatty is false"""
+        if not sys.__stdin__.isatty():
+            print("(hbnb)") 
 
     def postloop(self):
-        print() 
+        """Prints if isatty is false"""
+        if not sys.__stdin__.isatty():
+            print("(hbnb) ", end="")
 
     def do_quit(self, arg):
         '''Quit command to exit'''
@@ -115,6 +121,10 @@ class HBNBCommand(cmd.Cmd):
                 value = attr_type(args[3])
                 setattr(storage.all()[key], args[2], value)
                 storage.all()[key].save()
+
+    def emptyline(self):
+        """Overrides empty line behavior"""
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
