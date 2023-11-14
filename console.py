@@ -79,8 +79,19 @@ class HBNBCommand(cmd.Cmd):
         print(storage.all()[key])
 
     def do_all(self, arg):
-        '''Prints string representations of instances'''
-        print([str(obj) for obj in storage.all().values()])
+        """Prints string representations of instances"""
+        args = arg.split('.')
+        if len(args) < 2:
+            print("** class name missing **") 
+            return
+
+        if args[0] not in classes:
+            print("** class doesn't exist **")
+            return
+
+        objs = storage.all(classes[args[0]])
+        print([str(obj) for obj in objs.values()])
+
 
     def do_destroy(self, arg):
         '''Deletes an instance and saves to file'''
