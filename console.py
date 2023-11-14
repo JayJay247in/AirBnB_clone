@@ -75,21 +75,25 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def do_show(self, arg):
-        '''Prints object based on class and id'''
-        args = shlex.split(arg)
-        if len(args) == 0:
+        """Prints an instance based on the class name and id"""
+        args = arg.split('.')
+        if len(args) < 2:
             print("** class name missing **")
             return
+
         if args[0] not in classes:
             print("** class doesn't exist **")
             return
-        if len(args) < 2:
+
+        if len(args) < 3:
             print("** instance id missing **")
             return
-        key = args[0] + "." + args[1]
+
+        key = "{}.{}".format(args[0], args[1])
         if key not in storage.all():
             print("** no instance found **")
             return
+
         print(storage.all()[key])
 
     def do_all(self, arg):
@@ -108,44 +112,64 @@ class HBNBCommand(cmd.Cmd):
 
 
     def do_destroy(self, arg):
-        '''Deletes an instance and saves to file'''
-        args = shlex.split(arg)
-        if len(args) == 0:
+        """Deletes an instance and saves to JSON file"""
+        args = arg.split('.')
+        if len(args) < 2:
             print("** class name missing **")
-        elif args[0] not in classes:
+            return
+
+        if args[0] not in classes:
             print("** class doesn't exist **")
-        elif len(args) < 2:
+            return
+
+        if len(args) < 3:
             print("** instance id missing **")
-        else:
-            key = args[0] + "." + args[1]
-            if key not in storage.all():
-                print("** no instance found **")
-            else:
-                del storage.all()[key]  
-                storage.save()
+            return
+
+        key = "{}.{}".format(args[0], args[1])
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+
+        del storage.all()[key]
+        storage.save()
 
     def do_update(self, arg):
-        '''Updates instance and saves to file'''
-        args = shlex.split(arg)
-        if len(args) == 0:
-            print("** class name missing **")
-        elif args[0] not in classes:
+        """Updates an instance and saves to JSON file"""
+        args = arg.split('.')
+        if len(args) < 2:
+            print("** class name missing **")  
+            return
+
+        if args[0] not in classes:
             print("** class doesn't exist **")
-        elif len(args) < 2:
+            return
+
+        if len(args) < 3:
             print("** instance id missing **")
+            return
+
+        key = "{}.{}".format(args[0], args[1])
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+
+        if len(args) < 4:
+            print("** attribute name missing **")
+            return
+
+        obj = storage.all()[key]
+
+        if isinstance(args[3], dict):
+            for attr, value in args[3].items():
+                setattr(obj, attr, value) 
         else:
-            key = args[0] + "." + args[1]
-            if key not in storage.all():
-                print("** no instance found **")
-            elif len(args) < 3:
-                print("** attribute name missing **")
-            elif len(args) < 4:
-                print("** value missing **")
-            else:
-                attr_type = type(getattr(storage.all()[key], args[2]))
-                value = attr_type(args[3])
-                setattr(storage.all()[key], args[2], value)
-                storage.all()[key].save()
+            # Update single attribute
+            attr_type = type(getattr(obj, args[3]))
+            value = attr_type(args[4])
+            setattr(obj, args[3], value)
+
+        storage.all()[key].save()
 
     def emptyline(self):
         """Overrides empty line behavior"""
