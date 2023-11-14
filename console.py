@@ -59,6 +59,20 @@ class HBNBCommand(cmd.Cmd):
         obj = classes[args[0]]()
         obj.save()
         print(obj.id)
+    
+    def do_count(self, arg):
+        """Retrieves the number of instances of a class""" 
+        args = arg.split('.')
+        if len(args) < 2:
+            print("** class name missing **") 
+            return
+
+        if args[0] not in classes:
+            print("** class doesn't exist **")
+            return
+
+        count = storage.count(classes[args[0]])
+        print(count)
 
     def do_show(self, arg):
         '''Prints object based on class and id'''

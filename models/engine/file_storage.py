@@ -38,6 +38,16 @@ class FileStorage:
         else:
             return FileStorage.__objects
 
+    def count(self, cls=None):
+        count = 0
+        if cls:
+            for obj in FileStorage.__objects.values():
+                if type(obj).__name__ == cls.__name__:
+                    count += 1
+        else:
+            count = len(FileStorage.__objects)
+        return count
+
     def new(self, obj):
         """Sets object in __objects dict"""
         cls = obj.__class__.__name__
