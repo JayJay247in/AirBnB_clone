@@ -1,0 +1,99 @@
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+
+  .container {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters button {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .places {
+    margin: 20px auto;  
+  }
+
+  .places article {
+    width: 100%;
+  }
+
+  .information {
+    height: auto;
+    flex-wrap: wrap;
+  }
+
+  .max_guest,  
+  .number_rooms,
+  .number_bathrooms {
+    flex: 1 1 150px;
+  }
+
+  .user {
+    text-align: center;
+  }
+
+  .amenities ul {
+    justify-content: center;  
+  }   
+
+}
+
+/* Header */  
+@media (max-width: 600px) {
+
+  header {
+    flex-wrap: wrap;
+  }
+
+  #header_logo {
+    width: 100%;
+    text-align: center; 
+  }
+
+}   
+
+/* Footer */
+@media (max-width: 600px) {
+
+  footer {
+    text-align: center;
+  }
+
+  footer p {
+    width: 100%;
+  }
+
+}  
+
+/* Place */    
+.headline {
+  flex-wrap: wrap; 
+}
+
+.article_title {
+  font-size: 26px;
+  width: 100%;
+  text-align: center;  
+}
+
+.price_by_night {
+  position: static;
+  margin: 10px auto 0;  
+}
+
+/* Reviews */
+.reviews ul {
+  padding: 0;   
+}
+
+.review_item {
+  background-color: #f7f7f7;
+  padding: 10px;
+  margin-bottom: 10px;
+}

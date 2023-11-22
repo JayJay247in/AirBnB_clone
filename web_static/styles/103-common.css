@@ -1,0 +1,13 @@
+/* Header */  
+@media (max-width: 600px) {
+
+    header {
+      flex-wrap: wrap;
+    }
+  
+    #header_logo {
+      width: 100%;
+      text-align: center; 
+    }
+  
+  }   

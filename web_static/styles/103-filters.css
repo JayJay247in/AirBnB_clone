@@ -1,0 +1,45 @@
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+
+    .container {
+      width: 100%;
+      padding: 0 20px;
+    }
+  
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filters button {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .places {
+      margin: 20px auto;  
+    }
+  
+    .places article {
+      width: 100%;
+    }
+  
+    .information {
+      height: auto;
+      flex-wrap: wrap;
+    }
+  
+    .max_guest,  
+    .number_rooms,
+    .number_bathrooms {
+      flex: 1 1 150px;
+    }
+  
+    .user {
+      text-align: center;
+    }
+  
+    .amenities ul {
+      justify-content: center;  
+    }   
+  
+  }

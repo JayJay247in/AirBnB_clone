@@ -1,0 +1,12 @@
+/* Footer */
+@media (max-width: 600px) {
+
+    footer {
+      text-align: center;
+    }
+  
+    footer p {
+      width: 100%;
+    }
+  
+  }  
